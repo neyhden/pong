@@ -24,15 +24,6 @@ void MoveSystem(ecs_iter_t* it) {
     }
 }
 
-void DrawCircleSystem(ecs_iter_t* it) {
-    Position* p = ecs_field(it, Position, 1);
-    Radius* r = ecs_field(it, Radius, 2);
-    Color* c = ecs_field(it, Color, 3);
-    for (int i = 0; i < it->count; i++) {
-        DrawCircleV(p[i], r[i], c[i]);
-    }
-}
-
 void DrawSquareSystem(ecs_iter_t* it) {
     Position* p = ecs_field(it, Position, 1);
     Square* s = ecs_field(it, Square, 2);
@@ -65,12 +56,10 @@ int main() {
     ECS_COMPONENT_DEFINE(world, Position);
     ECS_COMPONENT_DEFINE(world, Velocity);
     ECS_COMPONENT_DEFINE(world, Square);
-    ECS_COMPONENT_DEFINE(world, Radius);
     ECS_COMPONENT_DEFINE(world, Color);
     ECS_COMPONENT_DEFINE(world, Controls);
 
     ECS_SYSTEM(world, MoveSystem, EcsOnUpdate, Position, Velocity);
-    ECS_SYSTEM(world, DrawCircleSystem, EcsOnStore, Position, Radius, Color);
     ECS_SYSTEM(world, DrawSquareSystem, EcsOnStore, Position, Square, Color);
     ECS_SYSTEM(world, PlayerInput, EcsOnLoad, Controls, Velocity);
 
@@ -81,7 +70,7 @@ int main() {
     ecs_entity_t ball = ecs_new_id(world);
     ecs_set(world, ball, Position, {width / 2.0, height / 2.0});
     ecs_set(world, ball, Velocity, {150, 150});
-    ecs_set(world, ball, Radius, {10});
+    ecs_set(world, ball, Square, {15, 15});
     ecs_set(world, ball, Color, {255, 255, 255, 255});
 
     // Left player
@@ -115,7 +104,6 @@ int main() {
         BeginDrawing();
         ClearBackground(BLACK);
         ecs_progress(world, GetFrameTime());
-        DrawFPS(0, 0);
         EndDrawing();
     }
 

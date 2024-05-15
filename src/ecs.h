@@ -6,9 +6,7 @@
 static ECS_COMPONENT_DECLARE(Position);
 static ECS_COMPONENT_DECLARE(Velocity);
 static ECS_COMPONENT_DECLARE(Square);
-static ECS_COMPONENT_DECLARE(Radius);
 static ECS_COMPONENT_DECLARE(Color);
 static ECS_COMPONENT_DECLARE(Controls);
-static ECS_COMPONENT_DECLARE(AABB);
 
 #endif
